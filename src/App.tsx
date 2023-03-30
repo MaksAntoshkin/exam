@@ -2,6 +2,7 @@ import { useState } from "react";
 import Currency from "./Currency";
 import ProductList from "./ProductList";
 import productsArray from "./productsArray";
+import "./products.css";
 
 type ProductsInCartType = {
   [id: number]: number;
@@ -29,13 +30,13 @@ const App = (props: Props) => {
   }
 
   const exchangeRates: ExchangeRates = {
-    USD: 1,
-    EUR: 0.84,
+    USD: 1.08,
+    EUR: 1,
     UAH: 39.95,
   };
 
   return (
-    <>
+    <div>
       <h1>Our shop page</h1>
       <Currency changeCurrency={changeCurrency} />
       <ProductList
@@ -55,7 +56,7 @@ const App = (props: Props) => {
         )}
         {currency}
       </p>
-    </>
+    </div>
   );
 };
 export default App;

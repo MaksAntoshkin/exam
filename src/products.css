@@ -1,9 +1,16 @@
+div {
+    text-align: center;
+}
+
 .products {
     display: flex;
     gap: 80px;
     text-align: center;
+    justify-content: center;
+    margin: 40px;
 }
 
 .product-description{
     font-weight: 300;
 }
+
