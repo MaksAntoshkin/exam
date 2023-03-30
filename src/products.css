@@ -1,0 +1,9 @@
+.products {
+    display: flex;
+    gap: 80px;
+    text-align: center;
+}
+
+.product-description{
+    font-weight: 300;
+}

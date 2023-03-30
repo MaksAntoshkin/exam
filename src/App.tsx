@@ -1,26 +1,61 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Currency from "./Currency";
+import ProductList from "./ProductList";
+import productsArray from "./productsArray";
 
-function App() {
+type ProductsInCartType = {
+  [id: number]: number;
+};
+
+type ExchangeRates = {
+  [key: string]: number;
+};
+
+type Props = {};
+const App = (props: Props) => {
+  const [productsInCart, setProductsInCart] = useState<ProductsInCartType>({});
+
+  const addProductToCart = (id: number, count: number) => {
+    setProductsInCart((prevState) => ({
+      ...prevState,
+      [id - 1]: (prevState[id - 1] || 0) + count,
+    }));
+  };
+
+  const [currency, setCurrency] = useState<string>("EUR");
+
+  function changeCurrency(newCurrency: string) {
+    setCurrency(newCurrency);
+  }
+
+  const exchangeRates: ExchangeRates = {
+    USD: 1,
+    EUR: 0.84,
+    UAH: 39.95,
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>Our shop page</h1>
+      <Currency changeCurrency={changeCurrency} />
+      <ProductList
+        addProductToCart={addProductToCart}
+        currency={currency}
+        exchangeRates={exchangeRates}
+      />
+      <p>
+        total: {""}
+        {Object.keys(productsInCart).reduce(
+          (total, productId) =>
+            total +
+            productsArray[parseInt(productId)].price *
+              exchangeRates[currency] *
+              productsInCart[parseInt(productId)],
+          0
+        )}
+        {currency}
+      </p>
+    </>
   );
-}
-
+};
 export default App;
