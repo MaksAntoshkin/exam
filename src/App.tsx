@@ -19,7 +19,7 @@ const App = (props: Props) => {
   const addProductToCart = (id: number, count: number) => {
     setProductsInCart((prevState) => ({
       ...prevState,
-      [id - 1]: (prevState[id - 1] || 0) + count,
+      [id]: (prevState[id] || 0) + count,
     }));
   };
 
@@ -49,7 +49,8 @@ const App = (props: Props) => {
         {Object.keys(productsInCart).reduce(
           (total, productId) =>
             total +
-            productsArray[parseInt(productId)].price *
+            productsArray.find((product) => product.id === parseInt(productId))!
+              .price *
               exchangeRates[currency] *
               productsInCart[parseInt(productId)],
           0
